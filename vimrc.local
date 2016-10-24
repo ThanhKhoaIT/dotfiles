@@ -1,0 +1,425 @@
+syntax enable
+set t_Co=256
+set background=dark
+colorscheme seoul256
+syntax on
+
+" let g:solarized_termtrans = 1
+" let g:solarized_termcolors=256
+" let g:solarized_visibility = "high"
+" let g:solarized_contrast = "high"
+" colorscheme solarized
+
+set clipboard=unnamed
+set diffopt+=vertical
+set splitright
+set nobackup
+" set noswapfile
+hi Normal ctermbg=NONE
+
+" vim-gitgutter
+let g:gitgutter_realtime = 1
+
+" vim-copypath
+nnoremap <silent> yp :CopyRelativePath<CR>
+nnoremap <silent> yP :CopyRelativePath!<CR>
+nnoremap <silent> yu :CopyFullPath<CR>
+nnoremap <silent> yU :CopyFullPath!<CR>
+nnoremap <silent> yd :CopyParentPath<CR>
+nnoremap <silent> yD :CopyParentPath!<CR>
+
+" Insert Mode
+
+" Normal Mode
+nmap \|\| <C-w>\|
+nmap \\ <C-w>=
+nmap , *
+nmap ( ^
+nmap ) $
+nmap <Tab> <C-w>l
+nmap <S-Tab> <C-w>h
+nmap <Leader>k :Ag! <cword><CR>
+nmap K kJ
+nmap + :vertical resize +20<cr>
+nmap _ :vertical resize -20<cr>
+
+" Find
+nmap fs :Ag! "<cword>" -G "\.(css\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+nmap fj :Ag! "<cword>" -G "\.js" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
+nmap fr :Ag! "<cword>" -G "\.rb"<CR>
+nmap fv :Ag! "<cword>" -G "\.(haml\|erb)"<CR>
+nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
+nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
+nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|css\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+
+nnoremap '' <c-^>
+
+" Common
+map <Leader>w :w<CR>           "Save file
+map <Leader>q :q<CR>           "Quit file
+map <Leader>va <ESC>ggVG<CR>   "Select all file
+map <C-c> "*y<CR>
+map <C-a> <ESC>gg<S-v>G<ESC>
+" Find:
+map <Leader>ag :Ag!<SPACE>
+map <Leader>fs :Ag! -G "\.(css\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+map <Leader>fj :Ag! -G "\.js" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
+map <Leader>fr :Ag! -G "\.rb"<SPACE>
+map <Leader>fv :Ag! -G "\.(haml\|erb)"<SPACE>
+map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
+map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
+map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+
+map <Leader>bi :PluginInstall<CR>
+map <Leader>ct :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
+map <Leader>db :Start! DISABLE_SPRING=true RAILS_ENV=test rake db:drop db:create db:schema:load<CR>
+map <Leader>` :Start! ctags -R ./ $(bundle list --paths) --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
+map <Leader>f :FixWhitespace<CR>
+map <Leader>n <C-w>v<C-h>''
+map <Leader>h :GundoToggle<CR>
+map <Leader>nt :NERDTreeToggle<CR>
+map <Leader>tf :NERDTreeFind<CR>
+map <Leader>rm :Remove!<CR>
+map <Leader>sg :sp<CR>:grep<SPACE>
+map <Leader>sv :source ~/.vimrc<CR>
+map <Leader>te :tabe<SPACE>
+map <Leader>v "*p<CR>
+map <Leader>vi :tabe ~/.vimrc.local<CR>
+map <Leader>p hplde
+map <C-q> :qa<CR>
+map <Leader>bt :Tagbar<CR>
+map <Leader>b :mark<SPACE>
+
+nnoremap <CR> o<Esc>k
+nnoremap <S-CR> O<Esc>j
+
+" Git
+map <Leader>co :Gread<CR>
+map <Leader>ga :Gwrite<CR>
+map <Leader>gac :Gcommit -am ""<LEFT>
+map <Leader>gb :Gblame<CR>
+map <Leader>gc :Gcommit -m ""<LEFT>
+map <Leader>gd :Gvdiff<CR>
+map <Leader>gm :Gmove<SPACE>
+map <Leader>gr :Gremove<CR>
+map <Leader>gs :Gstatus<CR>
+
+" Rails
+map <Leader>aj <ESC>:e app/assets/javascripts/application.js<CR>
+map <Leader>as <ESC>:e app/assets/stylesheets/application.scss<CR>
+map <Leader>av :AV<CR>
+map <Leader>bb :!bundle install<CR>
+map <Leader>d <ESC>obyebug<ESC>
+map <Leader>dv <ESC>o- byebug<ESC>
+map <Leader>g :e Gemfile<CR>
+
+map <Leader>c :Vcontroller<SPACE>
+map <Leader>ec :Econtroller<CR>
+
+map <Leader>vh :Vhelper<SPACE>
+map <Leader>vf :Vfactory<SPACE>
+
+map <Leader>m :Vmodel<SPACE>
+map <Leader>em :Emodel<SPACE>
+
+map <Leader>vv :Vview<SPACE>
+map <Leader>ev :Eview<CR>
+map <Leader>rv :RV<CR>
+
+map <Leader>rt :e config/routes.rb<CR>
+map <Leader>sc :sp db/schema.rb<CR>
+" map <Leader>cv :REview <C-r><C-w>.html.haml
+map <Leader>cv :call CurrentFuncNameRuby()<CR>
+
+" Ctrl-P
+nnoremap <c-]> :CtrlPtjump<cr>
+vnoremap <c-]> :CtrlPtjumpVisual<cr>
+
+" vim-rspec mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+" map <Leader>a :call RunAllSpecs()<CR>
+let g:rspec_command = "Dispatch rspec {spec} -c -fprogress"
+let g:rspec_runner = "os_x_iterm2"
+
+" Navigate
+imap <C-h> <C-o>h
+imap <C-j> <C-o>j
+imap <C-k> <C-o>k
+imap <C-l> <C-o>l
+
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+if has('nvim')
+  map <BS> <C-W>h
+else
+  map <C-h> <C-w>h
+endif
+
+" Multi Cursor
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+vmap <Leader>. :MultipleCursorsFind<SPACE>
+
+
+let NERDTreeIgnore=['tmp', 'log', 'tags', 'package.json.sample', 'dump.rdb', 'config.ru', 'public', 'node_modules', 'bin', 'README', 'README.md', 'circle.yml', '\.otf$', '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$']
+" let g:ag_format="%l:%f:%m"
+
+" Plugin 'matze/vim-move'
+let g:move_key_modifier = 'C'
+
+" AG search
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  " let g:ctrlp_user_command = 'ag %s -l -g""' " --nocolor
+  " let g:ctrlp_user_command = 'ag %s -l -g'
+endif
+
+" let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
+
+highlight Search ctermbg=none ctermfg=none cterm=underline
+highlight Directory cterm=bold ctermfg=209 ctermbg=NONE
+highlight LineNr cterm=bold ctermfg=242 ctermbg=237
+highlight VertSplit ctermfg=234 ctermbg=234
+" highlight CursorLineNr term=bold ctermfg=232 ctermbg=244
+" highlight CursorLine ctermfg=none ctermbg=none guifg=none guibg=none
+" set cursorline
+
+" highlight Visual ctermbg=blue
+
+" Syntax
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" let g:tmuxline_powerline_separators = 2
+
+" Airline
+set encoding=utf-8
+set guifont="Inconsolata\-g\ for\ Powerline"
+set laststatus=2
+set fillchars+=stl:\ ,stlnc:\ ,vert:\ 
+
+let base16colorspace=256
+let g:Powerline_symbols = 'fancy'
+let g:airline_theme= 'papercolor'
+let g:airline#extensions#po#enabled = 0
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#default#layout = [
+    \ [ 'a', 'b' ],
+    \ [ 'error', 'warning' ]
+    \ ]
+" let g:airline#extensions#ctrlp#color_template = 'insert'
+" let g:airline#extensions#ctrlp#color_template = 'normal'
+" let g:airline#extensions#ctrlp#color_template = 'visual'
+" let g:airline#extensions#ctrlp#color_template = 'replace'
+
+function! AirlineInit()
+  let g:airline_section_a = airline#section#create(['mode'])
+  let g:airline_section_b = airline#section#create_left(['file'])
+  let g:airline_section_c = airline#section#create([])
+  let g:airline_section_x = ""
+  let g:airline_section_y = ""
+  let g:airline_section_z = ""
+endfunction
+autocmd User AirlineAfterInit call AirlineInit()
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+" NERDTree
+let g:NERDTreeDirArrowExpandable = ""
+let g:NERDTreeDirArrowCollapsible = ""
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+
+" Syntastic
+let g:syntastic_error_symbol = ""
+let g:syntastic_warning_symbol = ""
+
+" Gitgutter
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = ''
+let g:gitgutter_sign_removed = ''
+let g:gitgutter_sign_modified_removed = ''
+
+
+
+""""""""""""""""""""""""""""""""""""""""
+""            EasyMotion              ||
+map  ' <Plug>(easymotion-sn)
+omap ' <Plug>(easymotion-tn)<Paste>
+map  m <Plug>(easymotion-next)
+map  M <Plug>(easymotion-prev)
+""            END EasyMotion          ||
+""""""""""""""""""""""""""""""""""""""""
+
+" CtrlPtjump
+let g:ctrlp_tjump_shortener = ['/.*/gems/', '.../']
+let g:ctrlp_tjump_only_silent = 1
+let g:ctrlp_tjump_skip_tag_name = 1
+
+function! CurrentFuncNameRuby()
+  let l:index = line('.')
+  while l:index > 1
+    let l:line_string = getline(l:index)
+    let l:line_words = split(l:line_string, ' ')
+    let l:def_index = index(l:line_words, 'def')
+    if (l:def_index >= 0)
+      let l:func_name = split(l:line_words[l:def_index + 1], "(")[0]
+      let l:command_string = ":REview " . l:func_name . '.html.haml'
+      execute l:command_string
+      return
+    endif
+    let l:index -= 1
+  endwhile
+  echo 'Not detect method name'
+endfunction
+
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|public$|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+\ }
+
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+" JSX
+let g:jsx_ext_required = 0
+let g:jsx_pragma_required = 1
+
+" Ruby Auto Format
+let g:rubyformat_on_save = 0
+
+"""""""""""""""""""""""""""""
+"      NEOCOMPLCACHE
+"""""""""""""""""""""""""""""
+
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Enable heavy features.
+" Use camel case completion.
+"let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+"let g:neocomplcache_enable_underbar_completion = 1
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplcache_enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplcache_enable_insert_char_pre = 1
+
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+"""""""""""""""""""""""""""""
+"     END NEOCOMPLCACHE
+"""""""""""""""""""""""""""""
+
+
+
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+autocmd BufWritePre * FixWhitespace

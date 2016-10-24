@@ -1,0 +1,80 @@
+call plug#begin('~/.vim/plugged')
+
+" Define bundles via Github repos
+" Plug 'christoomey/vim-run-interactive'
+" Plug 'kchmck/vim-coffee-script'
+" Plug 'tpope/vim-eunuch'
+" Plug 'slim-template/vim-slim'
+" Plug 'mattn/webapi-vim'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'tomtom/tcomment_vim'
+" Plug 'croaky/vim-colors-github'
+" Plug 'neomake/neomake'
+
+" Plug 'Lokaltog/vim-powerline'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-ruby/vim-ruby'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'pbrisbin/vim-mkdir'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'ThanhKhoaIT/ctags.vim'
+Plug 'vim-scripts/matchit.zip'
+Plug 'vim-scripts/tComment'
+Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-hugefile'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'edkolev/tmuxline.vim'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'mattn/gist-vim'
+Plug 'rking/ag.vim'
+Plug 'KhoaRB/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-unimpaired'
+Plug 'altercation/vim-colors-solarized'
+Plug 'flazz/vim-colorschemes'
+Plug 'yggdroot/indentline'
+Plug 'KhoaRB/vim-move'
+Plug 'rstacruz/vim-closer'
+Plug 'tpope/vim-endwise'
+Plug 'ivalkeen/vim-ctrlp-tjump'
+" Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
+Plug 'easymotion/vim-easymotion'
+Plug 'wincent/command-t'
+Plug 'phongnh/vim-copypath'
+
+" Display
+" Plug 'ap/vim-css-color'
+Plug 'KhoaRB/vim-rubyformat'
+
+" Tagbar
+Plug 'majutsushi/tagbar'
+
+" Rspec
+Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-dispatch'
+Plug 'kassio/neoterm'
+
+" Auto complete
+" Plug 'ervandew/supertab'
+Plug 'Shougo/neocomplcache'
+
+
+" Style
+" Plug 'junegunn/vim-emoji'
+" Plug 'equalsraf/neovim-gui-shim'
+
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()
