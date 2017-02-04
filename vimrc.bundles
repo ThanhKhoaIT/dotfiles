@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plug 'Lokaltog/vim-powerline'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-ruby/vim-ruby'
@@ -44,6 +44,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'yggdroot/indentline'
 Plug 'KhoaRB/vim-move'
 Plug 'rstacruz/vim-closer'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'sjl/gundo.vim'
@@ -62,11 +63,13 @@ Plug 'majutsushi/tagbar'
 " Rspec
 Plug 'thoughtbot/vim-rspec'
 Plug 'tpope/vim-dispatch'
-Plug 'kassio/neoterm'
 
 " Auto complete
-" Plug 'ervandew/supertab'
-Plug 'Shougo/neocomplcache'
+Plug 'ervandew/supertab'
+" Plug 'sirver/ultisnips'
+" Plug 'honza/vim-snippets'
+" Plug 'msanders/snipmate.vim'
+" Plug 'Shougo/neocomplcache'
 
 
 " Style

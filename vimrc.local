@@ -15,7 +15,16 @@ set diffopt+=vertical
 set splitright
 set nobackup
 " set noswapfile
-hi Normal ctermbg=NONE
+highlight Normal ctermbg=NONE
+highlight Search ctermbg=none ctermfg=none cterm=underline
+highlight Directory cterm=bold ctermfg=209 ctermbg=NONE
+highlight LineNr cterm=bold ctermfg=242 ctermbg=237
+highlight VertSplit ctermfg=234 ctermbg=234
+" highlight CursorLineNr term=bold ctermfg=232 ctermbg=244
+" highlight CursorLine ctermfg=none ctermbg=none guifg=none guibg=none
+" set cursorline
+" highlight Visual ctermbg=blue
+
 
 " vim-gitgutter
 let g:gitgutter_realtime = 1
@@ -33,24 +42,24 @@ nnoremap <silent> yD :CopyParentPath!<CR>
 " Normal Mode
 nmap \|\| <C-w>\|
 nmap \\ <C-w>=
-nmap , *
+" nmap , *
 nmap ( ^
 nmap ) $
 nmap <Tab> <C-w>l
 nmap <S-Tab> <C-w>h
-nmap <Leader>k :Ag! <cword><CR>
+nmap <Leader>k :Gbrowse! <cword><CR>
 nmap K kJ
 nmap + :vertical resize +20<cr>
 nmap _ :vertical resize -20<cr>
 
 " Find
-nmap fs :Ag! "<cword>" -G "\.(css\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
 nmap fj :Ag! "<cword>" -G "\.js" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
 nmap fr :Ag! "<cword>" -G "\.rb"<CR>
 nmap fv :Ag! "<cword>" -G "\.(haml\|erb)"<CR>
 nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
 nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
-nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|css\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
 
 nnoremap '' <c-^>
 
@@ -62,13 +71,13 @@ map <C-c> "*y<CR>
 map <C-a> <ESC>gg<S-v>G<ESC>
 " Find:
 map <Leader>ag :Ag!<SPACE>
-map <Leader>fs :Ag! -G "\.(css\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 map <Leader>fj :Ag! -G "\.js" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
 map <Leader>fr :Ag! -G "\.rb"<SPACE>
 map <Leader>fv :Ag! -G "\.(haml\|erb)"<SPACE>
 map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
 map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
-map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 
 map <Leader>bi :PluginInstall<CR>
 map <Leader>ct :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
@@ -114,6 +123,7 @@ map <Leader>dv <ESC>o- byebug<ESC>
 map <Leader>g :e Gemfile<CR>
 
 map <Leader>c :Vcontroller<SPACE>
+map <Leader>vc :Vcontroller<CR>
 map <Leader>ec :Econtroller<CR>
 
 map <Leader>vh :Vhelper<SPACE>
@@ -144,10 +154,10 @@ let g:rspec_command = "Dispatch rspec {spec} -c -fprogress"
 let g:rspec_runner = "os_x_iterm2"
 
 " Navigate
-imap <C-h> <C-o>h
-imap <C-j> <C-o>j
-imap <C-k> <C-o>k
-imap <C-l> <C-o>l
+" imap <C-h> <C-o>h
+" imap <C-j> <C-o>j
+" imap <C-k> <C-o>k
+" imap <C-l> <C-o>l
 
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
@@ -167,7 +177,6 @@ let g:multi_cursor_quit_key='<Esc>'
 vmap <Leader>. :MultipleCursorsFind<SPACE>
 
 
-let NERDTreeIgnore=['tmp', 'log', 'tags', 'package.json.sample', 'dump.rdb', 'config.ru', 'public', 'node_modules', 'bin', 'README', 'README.md', 'circle.yml', '\.otf$', '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$']
 " let g:ag_format="%l:%f:%m"
 
 " Plugin 'matze/vim-move'
@@ -185,15 +194,7 @@ endif
 
 " let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
 
-highlight Search ctermbg=none ctermfg=none cterm=underline
-highlight Directory cterm=bold ctermfg=209 ctermbg=NONE
-highlight LineNr cterm=bold ctermfg=242 ctermbg=237
-highlight VertSplit ctermfg=234 ctermbg=234
-" highlight CursorLineNr term=bold ctermfg=232 ctermbg=244
-" highlight CursorLine ctermfg=none ctermbg=none guifg=none guibg=none
-" set cursorline
-
-" highlight Visual ctermbg=blue
+autocmd BufWritePre * FixWhitespace
 
 " Syntax
 " set statusline+=%#warningmsg#
@@ -235,6 +236,7 @@ function! AirlineInit()
   let g:airline_section_z = ""
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
+
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -296,11 +298,15 @@ function! CurrentFuncNameRuby()
   echo 'Not detect method name'
 endfunction
 
-
+" Ignore
+let NERDTreeIgnore=['tmp', 'log', 'tags', 'package.json.sample',
+      \ 'dump.rdb', 'config.ru', 'public', 'node_modules',
+      \ 'bin', 'README', 'README.md', 'circle.yml', '\.otf$',
+      \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$']
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|public$|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-\ }
+      \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|client\/node_modules$\|public$|log\|tmp$',
+      \ 'file': '\.min\.js$\|\.json5$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
+      \ }
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
@@ -312,114 +318,10 @@ let g:jsx_pragma_required = 1
 " Ruby Auto Format
 let g:rubyformat_on_save = 0
 
-"""""""""""""""""""""""""""""
-"      NEOCOMPLCACHE
-"""""""""""""""""""""""""""""
+" UltiSnips
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<C-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+" let g:UltiSnipsEditSplit="vertical"
 
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" Enable heavy features.
-" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
-
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplcache_enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplcache_enable_insert_char_pre = 1
-
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-"""""""""""""""""""""""""""""
-"     END NEOCOMPLCACHE
-"""""""""""""""""""""""""""""
-
-
-
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-let g:neosnippet#enable_snipmate_compatibility = 1
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-autocmd BufWritePre * FixWhitespace
+au BufRead,BufNewFile *.es6 set filetype=javascript
