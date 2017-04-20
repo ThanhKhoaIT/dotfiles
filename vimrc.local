@@ -14,12 +14,12 @@ set clipboard=unnamed
 set diffopt+=vertical
 set splitright
 set nobackup
+set foldmethod=manual
 " set noswapfile
 highlight Normal ctermbg=NONE
 highlight Search ctermbg=none ctermfg=none cterm=underline
-highlight Directory cterm=bold ctermfg=209 ctermbg=NONE
 highlight LineNr cterm=bold ctermfg=242 ctermbg=237
-highlight VertSplit ctermfg=234 ctermbg=234
+" highlight VertSplit ctermfg=234 ctermbg=234
 " highlight CursorLineNr term=bold ctermfg=232 ctermbg=244
 " highlight CursorLine ctermfg=none ctermbg=none guifg=none guibg=none
 " set cursorline
@@ -40,8 +40,9 @@ nnoremap <silent> yD :CopyParentPath!<CR>
 " Insert Mode
 
 " Normal Mode
-nmap \|\| <C-w>\|
-nmap \\ <C-w>=
+nmap Z <C-w>\|
+nmap z <C-w>=
+
 " nmap , *
 nmap ( ^
 nmap ) $
@@ -54,12 +55,15 @@ nmap _ :vertical resize -20<cr>
 
 " Find
 nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
-nmap fj :Ag! "<cword>" -G "\.js" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
+nmap fj :Ag! "<cword>" -G "\(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
 nmap fr :Ag! "<cword>" -G "\.rb"<CR>
 nmap fv :Ag! "<cword>" -G "\.(haml\|erb)"<CR>
 nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
 nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
-nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+
+" Find method
+nmap - :RubyJump<CR>
 
 nnoremap '' <c-^>
 
@@ -72,12 +76,12 @@ map <C-a> <ESC>gg<S-v>G<ESC>
 " Find:
 map <Leader>ag :Ag!<SPACE>
 map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
-map <Leader>fj :Ag! -G "\.js" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
+map <Leader>fj :Ag! -G "\.(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
 map <Leader>fr :Ag! -G "\.rb"<SPACE>
 map <Leader>fv :Ag! -G "\.(haml\|erb)"<SPACE>
 map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
 map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
-map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 
 map <Leader>bi :PluginInstall<CR>
 map <Leader>ct :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
@@ -144,6 +148,11 @@ map <Leader>cv :call CurrentFuncNameRuby()<CR>
 " Ctrl-P
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
+nmap <c-p>m :CtrlPModels<cr>
+nmap <c-p>c :CtrlPControllers<cr>
+nmap <c-p>v :CtrlPViews<cr>
+nmap <c-p>l :CtrlPLibs<cr>
+nmap <c-p>d :CtrlPMigrations<cr>
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -254,6 +263,9 @@ let g:airline_symbols.linenr = ''
 let g:NERDTreeDirArrowExpandable = ""
 let g:NERDTreeDirArrowCollapsible = ""
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+highlight NERDTreeOpenable ctermfg=7
+highlight NERDTreeClosable ctermfg=15
+highlight Directory cterm=bold ctermfg=173
 
 " Syntastic
 let g:syntastic_error_symbol = ""
@@ -302,10 +314,10 @@ endfunction
 let NERDTreeIgnore=['tmp', 'log', 'tags', 'package.json.sample',
       \ 'dump.rdb', 'config.ru', 'public', 'node_modules',
       \ 'bin', 'README', 'README.md', 'circle.yml', '\.otf$',
-      \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$']
+      \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$', '\.eot$', '\.ttf$', '\.woff$', '\.woff2$']
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|client\/node_modules$\|public$|log\|tmp$',
-      \ 'file': '\.min\.js$\|\.json5$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
+      \ 'file': '\.min\.js$\|\.json5$\|\.eot$\|\.tff$\|\.woff$\|\.woff2$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
       \ }
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -324,4 +336,9 @@ let g:rubyformat_on_save = 0
 " let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " let g:UltiSnipsEditSplit="vertical"
 
+set autoread
 au BufRead,BufNewFile *.es6 set filetype=javascript
+au CursorHoldI * checktime
+
+
+autocmd FileType typescript :set makeprg=tsc
