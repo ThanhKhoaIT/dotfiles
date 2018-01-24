@@ -10,11 +10,15 @@ syntax on
 " let g:solarized_contrast = "high"
 " colorscheme solarized
 
+set timeoutlen=1000 ttimeoutlen=0
 set clipboard=unnamed
 set diffopt+=vertical
 set splitright
 set nobackup
-set foldmethod=manual
+set foldmethod=indent
+set foldlevelstart=20
+set scrolloff=5
+set wildmenu
 " set noswapfile
 highlight Normal ctermbg=NONE
 highlight Search ctermbg=none ctermfg=none cterm=underline
@@ -40,18 +44,37 @@ nnoremap <silent> yD :CopyParentPath!<CR>
 " Insert Mode
 
 " Normal Mode
+" ZoomFullPanel
 nmap Z <C-w>\|
-nmap z <C-w>=
+" UnZoom
+nmap zz <C-w>=
+
+" Quit all
+nmap ~~ :qa!<CR>
 
 " nmap , *
+nmap F za
+nmap <CR> *
 nmap ( ^
 nmap ) $
-nmap <Tab> <C-w>l
-nmap <S-Tab> <C-w>h
 nmap <Leader>k :Gbrowse! <cword><CR>
 nmap K kJ
 nmap + :vertical resize +20<cr>
 nmap _ :vertical resize -20<cr>
+
+nnoremap <TAB> >>
+nnoremap <S-TAB> <<
+vnoremap <TAB> >gv
+vnoremap <S-TAB> <gv
+
+vmap ) <Plug>(expand_region_expand)
+vmap ( <Plug>(expand_region_shrink)
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" Switch
+nmap <C-c> :Switch<CR>
 
 " Find
 nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
@@ -64,17 +87,18 @@ nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml
 
 " Find method
 nmap - :RubyJump<CR>
+nmap gm :RubyJumpCursor<CR>
 
 nnoremap '' <c-^>
 
 " Common
-map <Leader>w :w<CR>           "Save file
+map <Leader>w :update<CR>           "Save file
 map <Leader>q :q<CR>           "Quit file
 map <Leader>va <ESC>ggVG<CR>   "Select all file
 map <C-c> "*y<CR>
 map <C-a> <ESC>gg<S-v>G<ESC>
 " Find:
-map <Leader>ag :Ag!<SPACE>
+map <Leader>ag :Ag!<SPACE>""<LEFT>
 map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 map <Leader>fj :Ag! -G "\.(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
 map <Leader>fr :Ag! -G "\.rb"<SPACE>
@@ -91,6 +115,7 @@ map <Leader>f :FixWhitespace<CR>
 map <Leader>n <C-w>v<C-h>''
 map <Leader>h :GundoToggle<CR>
 map <Leader>nt :NERDTreeToggle<CR>
+map <Leader>nn :NERDTreeFocus<CR>
 map <Leader>tf :NERDTreeFind<CR>
 map <Leader>rm :Remove!<CR>
 map <Leader>sg :sp<CR>:grep<SPACE>
@@ -99,15 +124,12 @@ map <Leader>te :tabe<SPACE>
 map <Leader>v "*p<CR>
 map <Leader>vi :tabe ~/.vimrc.local<CR>
 map <Leader>p hplde
-map <C-q> :qa<CR>
 map <Leader>bt :Tagbar<CR>
 map <Leader>b :mark<SPACE>
 
-nnoremap <CR> o<Esc>k
-nnoremap <S-CR> O<Esc>j
 
 " Git
-map <Leader>co :Gread<CR>
+map <Leader>gco :Gread<CR>
 map <Leader>ga :Gwrite<CR>
 map <Leader>gac :Gcommit -am ""<LEFT>
 map <Leader>gb :Gblame<CR>
@@ -129,6 +151,7 @@ map <Leader>g :e Gemfile<CR>
 map <Leader>c :Vcontroller<SPACE>
 map <Leader>vc :Vcontroller<CR>
 map <Leader>ec :Econtroller<CR>
+map <Leader>oc :Econtroller<SPACE>
 
 map <Leader>vh :Vhelper<SPACE>
 map <Leader>vf :Vfactory<SPACE>
@@ -146,20 +169,21 @@ map <Leader>sc :sp db/schema.rb<CR>
 map <Leader>cv :call CurrentFuncNameRuby()<CR>
 
 " Ctrl-P
+map <c-p> :CtrlPMRUFiles<cr>
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
-nmap <c-p>m :CtrlPModels<cr>
-nmap <c-p>c :CtrlPControllers<cr>
-nmap <c-p>v :CtrlPViews<cr>
-nmap <c-p>l :CtrlPLibs<cr>
-nmap <c-p>d :CtrlPMigrations<cr>
+" nmap <c-p>m :CtrlPModels<cr>
+" nmap <c-p>c :CtrlPControllers<cr>
+" nmap <c-p>v :CtrlPViews<cr>
+" nmap <c-p>l :CtrlPLibs<cr>
+" nmap <c-p>d :CtrlPMigrations<cr>
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 " map <Leader>a :call RunAllSpecs()<CR>
-let g:rspec_command = "Dispatch rspec {spec} -c -fprogress"
+let g:rspec_command = "Dispatch rspec {spec} -c -fprogress --color"
 let g:rspec_runner = "os_x_iterm2"
 
 " Navigate
@@ -184,7 +208,6 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 vmap <Leader>. :MultipleCursorsFind<SPACE>
-
 
 " let g:ag_format="%l:%f:%m"
 
@@ -214,7 +237,16 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" let g:tmuxline_powerline_separators = 2
+" let g:tmuxline_powerline_separators = 1
+" let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : [' #I', '#W'],
+      \'x'    : '',
+      \'y'    : ["#(~/dotfiles/sh/git_branch.sh)"],
+      \'z'    : ['#(~/.tmux/plugins/tmux-cpu/scripts/cpu_percentage.sh)'],
+      \'options' : {'status-justify' : 'left'} }
 
 " Airline
 set encoding=utf-8
@@ -226,7 +258,7 @@ let base16colorspace=256
 let g:Powerline_symbols = 'fancy'
 let g:airline_theme= 'papercolor'
 let g:airline#extensions#po#enabled = 0
-let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#default#layout = [
     \ [ 'a', 'b' ],
     \ [ 'error', 'warning' ]
@@ -260,6 +292,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 " NERDTree
+let g:webdevicons_enable = 0
 let g:NERDTreeDirArrowExpandable = ""
 let g:NERDTreeDirArrowCollapsible = ""
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
@@ -293,6 +326,8 @@ let g:ctrlp_tjump_shortener = ['/.*/gems/', '.../']
 let g:ctrlp_tjump_only_silent = 1
 let g:ctrlp_tjump_skip_tag_name = 1
 
+let g:ctrlp_lazy_update = 1
+
 function! CurrentFuncNameRuby()
   let l:index = line('.')
   while l:index > 1
@@ -311,7 +346,7 @@ function! CurrentFuncNameRuby()
 endfunction
 
 " Ignore
-let NERDTreeIgnore=['tmp', 'log', 'tags', 'package.json.sample',
+let NERDTreeIgnore=['tmp', 'log/', 'tags', 'package.json.sample',
       \ 'dump.rdb', 'config.ru', 'public', 'node_modules',
       \ 'bin', 'README', 'README.md', 'circle.yml', '\.otf$',
       \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$', '\.eot$', '\.ttf$', '\.woff$', '\.woff2$']
@@ -324,11 +359,14 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " JSX
-let g:jsx_ext_required = 0
-let g:jsx_pragma_required = 1
+" let g:jsx_ext_required = 0
+" let g:jsx_pragma_required = 1
 
 " Ruby Auto Format
 let g:rubyformat_on_save = 0
+
+let g:syntastic_html_tidy_ignore_errors = [
+      \'File to import not found or unreadable: bootstrap']
 
 " UltiSnips
 " let g:UltiSnipsExpandTrigger="<tab>"
@@ -338,7 +376,4 @@ let g:rubyformat_on_save = 0
 
 set autoread
 au BufRead,BufNewFile *.es6 set filetype=javascript
-au CursorHoldI * checktime
-
-
-autocmd FileType typescript :set makeprg=tsc
+" au CursorHoldI * checktime

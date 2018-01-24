@@ -10,28 +10,41 @@ call plug#begin('~/.vim/plugged')
 " Plug 'tomtom/tcomment_vim'
 " Plug 'croaky/vim-colors-github'
 " Plug 'neomake/neomake'
-
 " Plug 'Lokaltog/vim-powerline'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-ruby/vim-ruby'
+
+" CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'iurifq/ctrlp-rails.vim'
-Plug 'pbrisbin/vim-mkdir'
-Plug 'leafgarland/typescript-vim'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-bundler'
+
+" Used
+Plug 'pangloss/vim-javascript'
+Plug 'terryma/vim-expand-region'
+Plug 'junegunn/vim-easy-align'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-repeat'
+Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-surround'
+Plug 'AndrewRadev/switch.vim'
+Plug 'scrooloose/syntastic'
 Plug 'ThanhKhoaIT/ctags.vim'
-Plug 'vim-scripts/matchit.zip'
 Plug 'vim-scripts/tComment'
 Plug 'airblade/vim-gitgutter'
+
+Plug 'pbrisbin/vim-mkdir'
+Plug 'phongnh/vim-copypath'
+
+
+" Unused
+" Plug 'mxw/vim-jsx'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'ap/vim-css-color'
+" Plug 'sjl/gundo.vim'
+" Plug 'mbbill/undotree'
+
+Plug 'vim-scripts/matchit.zip'
 Plug 'mhinz/vim-hugefile'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'edkolev/tmuxline.vim'
@@ -49,18 +62,18 @@ Plug 'KhoaRB/vim-move'
 Plug 'rstacruz/vim-closer'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
-" Plug 'sjl/gundo.vim'
-Plug 'mbbill/undotree'
 Plug 'easymotion/vim-easymotion'
-Plug 'wincent/command-t'
-Plug 'phongnh/vim-copypath'
+Plug 'itchyny/vim-gitbranch'
+
+
+" TMP
+Plug 'bendavis78/vim-polymer'
 
 " Display
-" Plug 'ap/vim-css-color'
 Plug 'KhoaRB/vim-rubyformat'
 
 " Tagbar
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
 " Rspec
 Plug 'thoughtbot/vim-rspec'
