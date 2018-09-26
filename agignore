@@ -5,3 +5,14 @@ tags
 /node_modules/
 /tmp
 /vendor
+*.jpg
+*.jpeg
+*.png
+*.svg
+*.gif
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.eot
+*.json

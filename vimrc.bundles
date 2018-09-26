@@ -27,11 +27,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-surround'
-Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'scrooloose/syntastic'
 Plug 'ThanhKhoaIT/ctags.vim'
 Plug 'vim-scripts/tComment'
 Plug 'airblade/vim-gitgutter'
+Plug 'AndrewRadev/switch.vim'
 
 Plug 'pbrisbin/vim-mkdir'
 Plug 'phongnh/vim-copypath'
@@ -64,7 +65,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'easymotion/vim-easymotion'
 Plug 'itchyny/vim-gitbranch'
-
 
 " TMP
 Plug 'bendavis78/vim-polymer'

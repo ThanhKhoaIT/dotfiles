@@ -73,8 +73,8 @@ vmap ( <Plug>(expand_region_shrink)
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Switch
-nmap <C-c> :Switch<CR>
+nmap ss :SplitjoinSplit<cr>
+nmap sj :SplitjoinJoin<cr>
 
 " Find
 nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
@@ -162,6 +162,8 @@ map <Leader>em :Emodel<SPACE>
 map <Leader>vv :Vview<SPACE>
 map <Leader>ev :Eview<CR>
 map <Leader>rv :RV<CR>
+map " ds"
+map "' cs"'
 
 map <Leader>rt :e config/routes.rb<CR>
 map <Leader>sc :sp db/schema.rb<CR>
@@ -183,7 +185,7 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 " map <Leader>a :call RunAllSpecs()<CR>
-let g:rspec_command = "Dispatch rspec {spec} -c -fprogress --color"
+let g:rspec_command = "Dispatch bundle exec rspec {spec} -c -fprogress --color"
 let g:rspec_runner = "os_x_iterm2"
 
 " Navigate
@@ -220,7 +222,7 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  " let g:ctrlp_user_command = 'ag %s -l -g""' " --nocolor
+  let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
   " let g:ctrlp_user_command = 'ag %s -l -g'
 endif
 
@@ -263,10 +265,10 @@ let g:airline#extensions#default#layout = [
     \ [ 'a', 'b' ],
     \ [ 'error', 'warning' ]
     \ ]
-" let g:airline#extensions#ctrlp#color_template = 'insert'
-" let g:airline#extensions#ctrlp#color_template = 'normal'
-" let g:airline#extensions#ctrlp#color_template = 'visual'
-" let g:airline#extensions#ctrlp#color_template = 'replace'
+let g:airline#extensions#ctrlp#color_template = 'insert'
+let g:airline#extensions#ctrlp#color_template = 'normal'
+let g:airline#extensions#ctrlp#color_template = 'visual'
+let g:airline#extensions#ctrlp#color_template = 'replace'
 
 function! AirlineInit()
   let g:airline_section_a = airline#section#create(['mode'])
