@@ -1,21 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'english'
-require 'rubocop'
-
-ADDED_OR_MODIFIED = /A|AM|^M/.freeze
-
-changed_files = `git status --porcelain`.split(/\n/).
-    select { |file_name_with_status|
-      file_name_with_status =~ ADDED_OR_MODIFIED
-    }.
-    map { |file_name_with_status|
-      file_name_with_status.split(' ')[1]
-    }.
-    select { |file_name|
-      File.extname(file_name) == '.rb'
-    }.join(' ')
-
-system("bundle exec rubocop #{changed_files} --force-exclusion") unless changed_files.empty?
-
-exit $CHILD_STATUS.to_s[-1].to_i
+files=$(git status -s | grep -E 'A|M' | awk '{print $2}')
+files="$files $(git status -s | grep -E 'R' | awk '{print $4}')"
+echo $files | xargs rubocop --display-cop-names --extra-details --parallel --force-exclusion

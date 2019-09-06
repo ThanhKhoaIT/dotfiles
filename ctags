@@ -1,5 +1,6 @@
 --exclude=bower_components
 --exclude=node_modules
+--exclude=dist
 /* --exclude=vendor */
 --exclude=.git
 --exclude=.hg

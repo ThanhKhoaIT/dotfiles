@@ -48,7 +48,7 @@ _load_settings "$HOME/.zsh/configs"
 export ZSH_CUSTOM="~/.oh-my-zsh"
 
 source ~/.oh-my-zsh/oh-my-zsh.sh
-plugins=(git rails vi-mode web-search)
+plugins=(git rails vi-mode )
 # ZSH_THEME="robbyrussell"
 alias cl=clear
 alias v=vim

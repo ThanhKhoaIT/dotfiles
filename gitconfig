@@ -28,3 +28,6 @@
 [user]
 	name = KhoaRB
 	email = ThanhKhoaIT@gmail.com
+	signingkey = 3C6251503DEA59C3
+[gpg]
+	program = gpg
