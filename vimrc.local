@@ -75,6 +75,7 @@ nmap ga <Plug>(EasyAlign)
 
 nmap ss :SplitjoinSplit<cr>
 nmap sj :SplitjoinJoin<cr>
+nmap sw :Switch<cr>
 
 " Find
 nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
@@ -264,7 +265,7 @@ let g:airline#extensions#po#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#default#layout = [
     \ [ 'a', 'b' ],
-    \ [ 'error', 'warning' ]
+    \ [ 'z', 'error', 'warning']
     \ ]
 let g:airline#extensions#ctrlp#color_template = 'insert'
 let g:airline#extensions#ctrlp#color_template = 'normal'
@@ -277,7 +278,7 @@ function! AirlineInit()
   let g:airline_section_c = airline#section#create([])
   let g:airline_section_x = ""
   let g:airline_section_y = ""
-  let g:airline_section_z = ""
+  let g:airline_section_z = airline#section#create(['gitmessage'])
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
