@@ -31,15 +31,11 @@ highlight LineNr cterm=bold ctermfg=242 ctermbg=237
 
 
 " vim-gitgutter
-let g:gitgutter_realtime = 1
+" let g:gitgutter_realtime = 1
 
 " vim-copypath
-nnoremap <silent> yp :CopyRelativePath<CR>
-nnoremap <silent> yP :CopyRelativePath!<CR>
-nnoremap <silent> yu :CopyFullPath<CR>
-nnoremap <silent> yU :CopyFullPath!<CR>
-nnoremap <silent> yd :CopyParentPath<CR>
-nnoremap <silent> yD :CopyParentPath!<CR>
+nnoremap <silent> yp :CopyPath<CR>
+nnoremap <silent> yfn :CopyFileName<CR>
 
 " Insert Mode
 
@@ -265,7 +261,7 @@ let g:airline#extensions#po#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#default#layout = [
     \ [ 'a', 'b' ],
-    \ [ 'z', 'error', 'warning']
+    \ [ 'error', 'warning']
     \ ]
 let g:airline#extensions#ctrlp#color_template = 'insert'
 let g:airline#extensions#ctrlp#color_template = 'normal'
@@ -278,7 +274,7 @@ function! AirlineInit()
   let g:airline_section_c = airline#section#create([])
   let g:airline_section_x = ""
   let g:airline_section_y = ""
-  let g:airline_section_z = airline#section#create(['gitmessage'])
+  " let g:airline_section_z = airline#section#create(['gitmessage'])
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -366,6 +362,8 @@ let g:SuperTabContextDefaultCompletionType = "<c-n>"
 " let g:jsx_ext_required = 0
 " let g:jsx_pragma_required = 1
 
+let g:github_enterprise_urls = ['https://github.com']
+
 " Ruby Auto Format
 let g:rubyformat_on_save = 0
 
@@ -381,3 +379,5 @@ let g:syntastic_html_tidy_ignore_errors = [
 set autoread
 au BufRead,BufNewFile *.es6 set filetype=javascript
 " au CursorHoldI * checktime
+
+set tags^=./.git/tags;

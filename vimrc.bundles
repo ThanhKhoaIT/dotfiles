@@ -25,6 +25,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim' "Git versions
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-surround'
@@ -36,8 +37,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'AndrewRadev/switch.vim'
 
 Plug 'pbrisbin/vim-mkdir'
-Plug 'phongnh/vim-copypath'
-
+Plug 'bag-man/copypath.vim'
 
 " Unused
 " Plug 'mxw/vim-jsx'
