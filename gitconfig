@@ -19,6 +19,7 @@
   ff = only
 [commit]
   template = ~/.gitmessage
+	gpgsign = true
 [fetch]
   prune = true
 [rebase]
@@ -26,8 +27,8 @@
 [include]
   path = ~/.gitconfig.local
 [user]
-	name = KhoaRB
-	email = ThanhKhoaIT@gmail.com
-	signingkey = 3C6251503DEA59C3
+	name = Khoa Nguyen
+	email = thanhkhoait@gmail.com
+	signingkey = 7A139F9F952FD985
 [gpg]
 	program = gpg

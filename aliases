@@ -4,7 +4,7 @@ alias cl="clear"
 alias ln="ln -v"
 alias mkdir="mkdir -p"
 alias e="$EDITOR"
-alias v="$VISUAL"
+alias v="vim"
 
 # Bundler
 alias b="bundle"
@@ -15,6 +15,9 @@ alias s="rspec"
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
+
+function current_repository() { git remote show origin -n | ruby -ne 'puts /^\s*Fetch.*:(.*).git/.match($_)[1] rescue nil' }
+alias gpr='open http://github.com/$(current_repository)/compare/master...$(git_current_branch)'
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
