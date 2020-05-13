@@ -1,0 +1,14 @@
+# ~/.tmuxinator/example.yml
+
+name: mdb
+root: ~/projects/mdb_demo
+pre_window: rvm use 2.4.2@mdb
+
+windows:
+  - editor:
+      layout: 8156,204x43,0,0[204x32,0,0,0,204x10,0,33,1]
+      panes:
+        - cd ../mdb; vim .
+        - cd ../mdb; cl
+  - console: bundle exec rails c
+  - server: bundle exec rails s -p 5000

@@ -1,0 +1,49 @@
+# ~/.tmuxinator/lixi.yml
+
+name: lixi
+root: ~/projects/lixibox
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+# pre_window: source ~/.zshrc && cd .
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specitifes (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t lixi
+
+windows:
+  - editor:
+      layout: 2548,236x52,0,0[236x33,0,0,0,236x18,0,34,4]
+      panes:
+        - vim .
+        - cl
+  - console: bundle exec rails c
+  - server: bundle exec rails s -b 0.0.0.0 -p 3000
+  - services:
+      # layout: 86d3,236x52,0,0[236x26,0,0,5,236x25,0,27,6]
+      layout: 711f,238x48,0,0[238x24,0,0,4,238x23,0,25{119x23,0,25,7,118x23,120,25,17}]
+      panes:
+        - bundle exec sidekiq
+        - cd ~/projects/dev_tools/elasticsearch && docker-compose up
+        - cd ~/projects/dev_tools/mongodb && docker-compose up
+  - cmd:

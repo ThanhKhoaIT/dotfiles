@@ -1,0 +1,12 @@
+# ~/.tmuxinator/nodejs.yml
+
+name: nodejs
+root: ~/projects/node_api
+
+windows:
+  - editor:
+      layout: 8156,204x43,0,0[204x32,0,0,0,204x10,0,33,1]
+      panes:
+        - cl; vim .
+        - cl
+  - server: node app.js
