@@ -165,7 +165,6 @@ map "' cs"'
 map <Leader>rt :e config/routes.rb<CR>
 map <Leader>sc :sp db/schema.rb<CR>
 " map <Leader>cv :REview <C-r><C-w>.html.haml
-map <Leader>cv :call CurrentFuncNameRuby()<CR>
 
 " Ctrl-P
 map <c-p> :CtrlPMRUFiles<cr>
@@ -338,7 +337,7 @@ function! CurrentFuncNameRuby()
     let l:def_index = index(l:line_words, 'def')
     if (l:def_index >= 0)
       let l:func_name = split(l:line_words[l:def_index + 1], "(")[0]
-      let l:command_string = ":REview " . l:func_name . '.html.haml'
+      let l:command_string = ":Vview " . l:func_name . '.html.haml'
       execute l:command_string
       return
     endif
@@ -346,6 +345,8 @@ function! CurrentFuncNameRuby()
   endwhile
   echo 'Not detect method name'
 endfunction
+
+map <Leader>cv :call CurrentFuncNameRuby()<CR>
 
 " Ignore
 let NERDTreeIgnore=['tmp', 'log/', 'tags', 'package.json.sample',
