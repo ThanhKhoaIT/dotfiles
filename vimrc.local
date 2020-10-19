@@ -364,8 +364,15 @@ let g:ctrlp_custom_ignore = {
       \ 'file': '\.min\.js$\|\.json5$\|\.eot$\|\.tff$\|\.woff$\|\.woff2$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
       \ }
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+" COC-TAB
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " JSX
 " let g:jsx_ext_required = 0

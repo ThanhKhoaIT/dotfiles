@@ -83,11 +83,13 @@ Plug 'tpope/vim-dispatch'
 
 Plug 'xmisao/rubyjump.vim'
 " Auto complete
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 " Plug 'sirver/ultisnips'
 " Plug 'honza/vim-snippets'
 " Plug 'msanders/snipmate.vim'
 " Plug 'Shougo/neocomplcache'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc-tabnine'
 
 Plug 'ThanhKhoaIT/rails-db-migrate.vim'
 
