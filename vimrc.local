@@ -160,7 +160,7 @@ map <Leader>vv :Vview<SPACE>
 map <Leader>ev :Eview<CR>
 map <Leader>rv :RV<CR>
 map " ds"
-map "' cs"'
+map !! cs"'
 
 map <Leader>rt :e config/routes.rb<CR>
 map <Leader>sc :sp db/schema.rb<CR>
@@ -176,12 +176,18 @@ vnoremap <c-]> :CtrlPtjumpVisual<cr>
 " nmap <c-p>l :CtrlPLibs<cr>
 " nmap <c-p>d :CtrlPMigrations<cr>
 
+map <Leader>dm :RailsMigrate<CR>
+map <Leader>dd :RailsMigrateDown<CR>
+map <Leader>du :RailsMigrateUp<CR>
+map <Leader>dr :RailsMigrateRedo<CR>
+let g:rails_migrate_command = "Dispatch bundle exec rake"
+
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 " map <Leader>a :call RunAllSpecs()<CR>
-let g:rspec_command = "Dispatch bundle exec rspec {spec} -c -fprogress --color"
+let g:rspec_command = "Dispatch ./bin/rspec {spec} -c -fprogress --color"
 let g:rspec_runner = "os_x_iterm2"
 
 " Navigate

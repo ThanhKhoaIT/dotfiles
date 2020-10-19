@@ -89,6 +89,7 @@ Plug 'ervandew/supertab'
 " Plug 'msanders/snipmate.vim'
 " Plug 'Shougo/neocomplcache'
 
+Plug 'ThanhKhoaIT/rails-db-migrate.vim'
 
 " Style
 " Plug 'junegunn/vim-emoji'
