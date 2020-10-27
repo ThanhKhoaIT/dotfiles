@@ -10,7 +10,7 @@ syntax on
 " let g:solarized_contrast = "high"
 " colorscheme solarized
 
-set timeoutlen=1000 ttimeoutlen=0
+set timeoutlen=400 ttimeoutlen=0
 set clipboard=unnamed
 set diffopt+=vertical
 set splitright
@@ -74,13 +74,45 @@ nmap sj :SplitjoinJoin<cr>
 nmap sw :Switch<cr>
 
 " Find
-nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
-nmap fj :Ag! "<cword>" -G "\(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
-nmap fr :Ag! "<cword>" -G "\.rb"<CR>
-nmap fv :Ag! "<cword>" -G "\.(haml\|erb)"<CR>
-nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
-nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
-nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+" map <Leader>ag :Ag!<SPACE>""<LEFT>
+" nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+" nmap fj :Ag! "<cword>" -G "\(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
+" nmap fr :Ag! "<cword>" -G "\.rb"<CR>
+" nmap fv :Ag! "<cword>" -G "\.(haml\|erb)"<CR>
+" nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
+" nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
+" nmap fb :Ag! "<cword>" -G \_blueprint\.rb -r "app/blueprints"<CR>
+" nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+"
+" map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+" map <Leader>fj :Ag! -G "\.(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
+" map <Leader>fr :Ag! -G "\.rb"<SPACE>
+" map <Leader>fv :Ag! -G "\.(haml\|erb)"<SPACE>
+" map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
+" map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
+" map <Leader>fb :Ag! -G \_blueprint\.rb -r "app/blueprints"<SPACE>
+" map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+"
+
+" Ripgrep Search
+nmap <Leader>ag :Rg<SPACE>
+
+nmap fs :Rg <cword> -g "*.{css,sass,scss}"<CR>
+nmap fj :Rg <cword> -g "*.{js,es6}"<CR>
+nmap fr :Rg <cword> -g "*.rb"<CR>
+nmap fv :Rg <cword> -g "app/views/*.{haml,erb}"<CR>
+nmap fm :Rg <cword> -g "app/models/*.rb"<CR>
+nmap fc :Rg <cword> -g "app/controllers/*.rb"<CR>
+nmap fb :Rg <cword> -g "app/blueprints/*_blueprint.rb"<CR>
+nmap fa :Rg <cword> -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml}"<CR>
+map <Leader>fs :Rg -g "*.{css,sass,scss}"<SPACE>
+map <Leader>fj :Rg -g "*.{js,es6}"<SPACE>
+map <Leader>fr :Rg -g "*.rb"<SPACE>
+map <Leader>fv :Rg -g "app/views/*.{haml,erb}"<SPACE>
+map <Leader>fm :Rg -g "app/models/*.rb"<SPACE>
+map <Leader>fc :Rg -g "app/controllers/*.rb"<SPACE>
+map <Leader>fb :Rg -g "app/blueprints/*_blueprint.rb"<SPACE>
+map <Leader>fa :Rg -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml}"<SPACE>
 
 " Find method
 nmap - :RubyJump<CR>
@@ -94,15 +126,6 @@ map <Leader>q :q<CR>           "Quit file
 map <Leader>va <ESC>ggVG<CR>   "Select all file
 map <C-c> "*y<CR>
 map <C-a> <ESC>gg<S-v>G<ESC>
-" Find:
-map <Leader>ag :Ag!<SPACE>""<LEFT>
-map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
-map <Leader>fj :Ag! -G "\.(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
-map <Leader>fr :Ag! -G "\.rb"<SPACE>
-map <Leader>fv :Ag! -G "\.(haml\|erb)"<SPACE>
-map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
-map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
-map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 
 map <Leader>bi :PluginInstall<CR>
 map <Leader>ct :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
@@ -144,6 +167,8 @@ map <Leader>bb :!bundle install<CR>
 map <Leader>d <ESC>obyebug<ESC>
 map <Leader>dv <ESC>o- byebug<ESC>
 map <Leader>g :e Gemfile<CR>
+
+map <Leader>b :Vblueprint<SPACE>
 
 map <Leader>c :Vcontroller<SPACE>
 map <Leader>vc :Vcontroller<CR>
@@ -218,15 +243,20 @@ vmap <Leader>. :MultipleCursorsFind<SPACE>
 " Plugin 'matze/vim-move'
 let g:move_key_modifier = 'C'
 
-" AG search
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+" " AG search
+" if executable('ag')
+"   " Use ag over grep
+"   set grepprg=ag\ --nogroup\ --nocolor
+"
+"   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+"   let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
+"   " let g:ctrlp_user_command = 'ag %s -l -g'
+" endif
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
-  " let g:ctrlp_user_command = 'ag %s -l -g'
-endif
+" Ripgrep
+set grepprg=rg\ --color=never
+let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_use_caching = 0
 
 " let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
 
@@ -329,11 +359,10 @@ map  M <Plug>(easymotion-prev)
 """"""""""""""""""""""""""""""""""""""""
 
 " CtrlPtjump
-let g:ctrlp_tjump_shortener = ['/.*/gems/', '.../']
+let g:ctrlp_tjump_shortener = ['/.*/.*/gems/', '.../']
 let g:ctrlp_tjump_only_silent = 1
 let g:ctrlp_tjump_skip_tag_name = 1
-
-let g:ctrlp_lazy_update = 1
+let g:ctrlp_lazy_update = 0
 
 function! CurrentFuncNameRuby()
   let l:index = line('.')
@@ -364,15 +393,15 @@ let g:ctrlp_custom_ignore = {
       \ 'file': '\.min\.js$\|\.json5$\|\.eot$\|\.tff$\|\.woff$\|\.woff2$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
       \ }
 
-" let g:SuperTabDefaultCompletionType = "<c-n>"
-" let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
-" COC-TAB
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" " COC-TAB
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " JSX
 " let g:jsx_ext_required = 0

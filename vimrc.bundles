@@ -39,6 +39,7 @@ Plug 'AndrewRadev/switch.vim'
 
 Plug 'pbrisbin/vim-mkdir'
 Plug 'bag-man/copypath.vim'
+Plug 'skywind3000/asyncrun.vim'
 
 " Unused
 " Plug 'mxw/vim-jsx'
@@ -54,7 +55,8 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mattn/gist-vim'
-Plug 'rking/ag.vim'
+" Plug 'rking/ag.vim'
+Plug 'jremmen/vim-ripgrep'
 Plug 'KhoaRB/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-unimpaired'
@@ -83,13 +85,12 @@ Plug 'tpope/vim-dispatch'
 
 Plug 'xmisao/rubyjump.vim'
 " Auto complete
-" Plug 'ervandew/supertab'
+Plug 'ervandew/supertab'
 " Plug 'sirver/ultisnips'
 " Plug 'honza/vim-snippets'
 " Plug 'msanders/snipmate.vim'
 " Plug 'Shougo/neocomplcache'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc-tabnine'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'ThanhKhoaIT/rails-db-migrate.vim'
 
