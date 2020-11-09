@@ -50,13 +50,15 @@ nmap ~~ :qa!<CR>
 
 " nmap , *
 nmap F za
-nmap <CR> *
+nmap K kJ
+" nmap <CR> *
+" nmap <S-CR> N
 nmap ( ^
 nmap ) $
 nmap <Leader>k :Gbrowse! <cword><CR>
-nmap K kJ
 nmap + :vertical resize +20<cr>
 nmap _ :vertical resize -20<cr>
+nmap <C-f> <PageDown>
 
 nnoremap <TAB> >>
 nnoremap <S-TAB> <<
@@ -96,23 +98,6 @@ nmap sw :Switch<cr>
 
 " Ripgrep Search
 nmap <Leader>ag :Rg<SPACE>
-
-nmap fs :Rg <cword> -g "*.{css,sass,scss}"<CR>
-nmap fj :Rg <cword> -g "*.{js,es6}"<CR>
-nmap fr :Rg <cword> -g "*.rb"<CR>
-nmap fv :Rg <cword> -g "app/views/*.{haml,erb}"<CR>
-nmap fm :Rg <cword> -g "app/models/*.rb"<CR>
-nmap fc :Rg <cword> -g "app/controllers/*.rb"<CR>
-nmap fb :Rg <cword> -g "app/blueprints/*_blueprint.rb"<CR>
-nmap fa :Rg <cword> -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml}"<CR>
-map <Leader>fs :Rg -g "*.{css,sass,scss}"<SPACE>
-map <Leader>fj :Rg -g "*.{js,es6}"<SPACE>
-map <Leader>fr :Rg -g "*.rb"<SPACE>
-map <Leader>fv :Rg -g "app/views/*.{haml,erb}"<SPACE>
-map <Leader>fm :Rg -g "app/models/*.rb"<SPACE>
-map <Leader>fc :Rg -g "app/controllers/*.rb"<SPACE>
-map <Leader>fb :Rg -g "app/blueprints/*_blueprint.rb"<SPACE>
-map <Leader>fa :Rg -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml}"<SPACE>
 
 " Find method
 nmap - :RubyJump<CR>
@@ -191,8 +176,18 @@ map <Leader>rt :e config/routes.rb<CR>
 map <Leader>sc :sp db/schema.rb<CR>
 " map <Leader>cv :REview <C-r><C-w>.html.haml
 
+" Tabs
+nmap <Leader>1 1gt
+nmap <Leader>2 2gt
+nmap <Leader>3 3gt
+nmap <Leader>4 4gt
+nmap <Leader>5 5gt
+nmap <Leader>6 6gt
+nmap <Leader>7 7gt
+nmap <Leader>8 8gt
+nmap <Leader>9 9gt
+
 " Ctrl-P
-map <c-p> :CtrlPMRUFiles<cr>
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
 " nmap <c-p>m :CtrlPModels<cr>
@@ -214,6 +209,8 @@ map <Leader>l :call RunLastSpec()<CR>
 " map <Leader>a :call RunAllSpecs()<CR>
 let g:rspec_command = "Dispatch ./bin/rspec {spec} -c -fprogress --color"
 let g:rspec_runner = "os_x_iterm2"
+let g:dispatch_quickfix_height=15
+let g:dispatch_tmux_height=5
 
 " Navigate
 " imap <C-h> <C-o>h
@@ -254,9 +251,10 @@ let g:move_key_modifier = 'C'
 " endif
 
 " Ripgrep
-set grepprg=rg\ --color=never
-let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-let g:ctrlp_use_caching = 0
+" set grepprg=rg\ --vimgrep
+" set grepformat^=%f:%l:%c:%m
+" let g:ctrlp_user_command = 'rg %s --files --vimgrep --color=never --glob ""'
+" let g:ctrlp_use_caching = 0
 
 " let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
 
@@ -304,6 +302,21 @@ let g:airline#extensions#ctrlp#color_template = 'insert'
 let g:airline#extensions#ctrlp#color_template = 'normal'
 let g:airline#extensions#ctrlp#color_template = 'visual'
 let g:airline#extensions#ctrlp#color_template = 'replace'
+
+" Tabline
+let g:airline#extensions#tabline#enabled = 1           " enable airline tabline
+let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline
+let g:airline#extensions#tabline#tabs_label = ''       " can put text here like BUFFERS to denote buffers (I clear it so nothing is shown)
+let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)
+let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab
+let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right
+let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline
+let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline
+let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline
+let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers
+let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
 
 function! AirlineInit()
   let g:airline_section_a = airline#section#create(['mode'])
@@ -372,7 +385,7 @@ function! CurrentFuncNameRuby()
     let l:def_index = index(l:line_words, 'def')
     if (l:def_index >= 0)
       let l:func_name = split(l:line_words[l:def_index + 1], "(")[0]
-      let l:command_string = ":Vview " . l:func_name . '.html.haml'
+      let l:command_string = ":Vview " . l:func_name . '.html.haml!'
       execute l:command_string
       return
     endif
@@ -420,6 +433,91 @@ let g:syntastic_html_tidy_ignore_errors = [
 " let g:UltiSnipsJumpForwardTrigger="<C-j>"
 " let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " let g:UltiSnipsEditSplit="vertical"
+
+" FZF
+command! -bang -nargs=* RGrails
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml}" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGmodel
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/models/**/*.rb" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGcontroller
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/controllers/**/*.rb" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGview
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/views/**/*.{haml,erb}" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGruby
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.rb" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGstyle
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.{css,sass,scss}" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGjs
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.{js,es6}" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* RGblueprint
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/blueprints/**/*_blueprint.rb" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+" FZF Mapping
+nmap fa :RGrails <C-R><C-W><CR>
+nmap fm :RGmodel <C-R><C-W><CR>
+nmap fv :RGview <C-R><C-W><CR>
+nmap fc :RGcontroller <C-R><C-W><CR>
+nmap fs :RGstyle <C-R><C-W><CR>
+nmap fj :RGjs <C-R><C-W><CR>
+nmap fr :RGruby <C-R><C-W><CR>
+nmap fb :RGblueprint <C-R><C-W><CR>
+nmap <Leader>f :Files<CR>
+nmap <Leader>fa :RGrails<SPACE>
+nmap <Leader>fm :RGmodel<SPACE>
+nmap <Leader>fv :RGview<SPACE>
+nmap <Leader>fc :RGcontroller<SPACE>
+nmap <Leader>fs :RGstyle<SPACE>
+nmap <Leader>fj :RGjs<SPACE>
+nmap <Leader>fr :RGruby<SPACE>
+nmap <Leader>fb :RGblueprint<SPACE>
+
+" FZF Search
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --hidden --no-ignore -l "" -g "!{log,.git,.terragrunt-cache}/" -g "!tmp/cache" -g "!*.{jpg,png,svg,cache,min.css,min.js,min.scss}"'
+elseif executable('fd')
+  let $FZF_DEFAULT_OPTS = '--ansi'
+  let $FZF_DEFAULT_COMMAND = 'fd --hidden --color always -E "{.git,.terragrunt-cache,log,tmp}/*","*.{jpg,png,svg,cache}","*.min.{scss,css,js}"'
+else
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+endif
+
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.4, 'yoffset': 1, 'border': 'horizontal' } }
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
 set autoread
 au BufRead,BufNewFile *.es6 set filetype=javascript

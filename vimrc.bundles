@@ -15,7 +15,10 @@ call plug#begin('~/.vim/plugged')
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
-Plug 'iurifq/ctrlp-rails.vim'
+" Plug 'iurifq/ctrlp-rails.vim'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Used
 Plug 'pangloss/vim-javascript'
@@ -56,7 +59,6 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mattn/gist-vim'
 " Plug 'rking/ag.vim'
-Plug 'jremmen/vim-ripgrep'
 Plug 'KhoaRB/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-unimpaired'
@@ -93,6 +95,8 @@ Plug 'ervandew/supertab'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'ThanhKhoaIT/rails-db-migrate.vim'
+
+Plug 'ThanhKhoaIT/git-message.vim'
 
 " Style
 " Plug 'junegunn/vim-emoji'
