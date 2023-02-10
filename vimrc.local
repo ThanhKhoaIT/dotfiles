@@ -17,6 +17,7 @@ set splitright
 set nobackup
 set foldmethod=indent
 set foldlevelstart=20
+set redrawtime=10000
 set scrolloff=5
 set wildmenu
 " set noswapfile
@@ -29,9 +30,11 @@ highlight LineNr cterm=bold ctermfg=242 ctermbg=237
 " set cursorline
 " highlight Visual ctermbg=blue
 
-
 " vim-gitgutter
 " let g:gitgutter_realtime = 1
+
+command W w
+command ForceKillRails !kill -9 $(cat tmp/pids/server.pid)
 
 " vim-copypath
 nnoremap <silent> yp :CopyPath<CR>
@@ -84,7 +87,7 @@ nmap sw :Switch<cr>
 " nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
 " nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
 " nmap fb :Ag! "<cword>" -G \_blueprint\.rb -r "app/blueprints"<CR>
-" nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+" nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml\|go)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
 "
 " map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 " map <Leader>fj :Ag! -G "\.(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
@@ -93,7 +96,7 @@ nmap sw :Switch<cr>
 " map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
 " map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
 " map <Leader>fb :Ag! -G \_blueprint\.rb -r "app/blueprints"<SPACE>
-" map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+" map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6\|go)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 "
 
 " Ripgrep Search
@@ -114,7 +117,6 @@ map <C-a> <ESC>gg<S-v>G<ESC>
 
 map <Leader>bi :PluginInstall<CR>
 map <Leader>ct :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
-map <Leader>db :Start! DISABLE_SPRING=true RAILS_ENV=test rake db:drop db:create db:schema:load<CR>
 map <Leader>` :Start! ctags -R ./ $(bundle list --paths) --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
 map <Leader>f :FixWhitespace<CR>
 map <Leader>n <C-w>v<C-h>''
@@ -129,7 +131,6 @@ map <Leader>te :tabe<SPACE>
 map <Leader>v "*p<CR>
 map <Leader>vi :tabe ~/.vimrc.local<CR>
 map <Leader>p hplde
-map <Leader>bt :Tagbar<CR>
 map <Leader>b :mark<SPACE>
 
 
@@ -397,10 +398,10 @@ endfunction
 map <Leader>cv :call CurrentFuncNameRuby()<CR>
 
 " Ignore
-let NERDTreeIgnore=['tmp', 'log/', 'tags', 'package.json.sample',
-      \ 'dump.rdb', 'config.ru', 'public', 'node_modules',
-      \ 'bin', 'README', 'README.md', 'circle.yml', '\.otf$',
-      \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$', '\.eot$', '\.ttf$', '\.woff$', '\.woff2$']
+" let NERDTreeIgnore=['tmp', 'log/', 'tags', 'package.json.sample',
+"       \ 'dump.rdb', 'config.ru', 'public', 'node_modules',
+"       \ 'bin', 'README', 'README.md', 'circle.yml', '\.otf$',
+"       \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$', '\.eot$', '\.ttf$', '\.woff$', '\.woff2$']
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|client\/node_modules$\|public$|log\|tmp$',
       \ 'file': '\.min\.js$\|\.json5$\|\.eot$\|\.tff$\|\.woff$\|\.woff2$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
@@ -435,48 +436,60 @@ let g:syntastic_html_tidy_ignore_errors = [
 " let g:UltiSnipsEditSplit="vertical"
 
 " FZF
+command! -bang -nargs=* RGgo
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading  --color=always --smart-case -g "*.{go,yml}" -- '.shellescape(<q-args>), 1,
+  \   {}, <bang>0)
+
 command! -bang -nargs=* RGrails
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml}" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   'rg --column --line-number --no-heading  --color=always --smart-case -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml,go}" -- '.shellescape(<q-args>), 1,
+  \   {}, <bang>0)
+
+command! -bang -nargs=* RGspec
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading  --color=always --smart-case -g "spec/**/*.{rb}" -- '.shellescape(<q-args>), 1,
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGmodel
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/models/**/*.rb" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGcontroller
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/controllers/**/*.rb" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGview
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/views/**/*.{haml,erb}" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGruby
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.rb" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGstyle
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.{css,sass,scss}" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGjs
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "*.{js,es6}" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 command! -bang -nargs=* RGblueprint
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "app/blueprints/**/*_blueprint.rb" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   {}, <bang>0)
 
 " FZF Mapping
+nmap fg :RGgo <C-R><C-W><CR>
 nmap fa :RGrails <C-R><C-W><CR>
+nmap ft :RGspec<SPACE>
 nmap fm :RGmodel <C-R><C-W><CR>
 nmap fv :RGview <C-R><C-W><CR>
 nmap fc :RGcontroller <C-R><C-W><CR>
@@ -484,8 +497,10 @@ nmap fs :RGstyle <C-R><C-W><CR>
 nmap fj :RGjs <C-R><C-W><CR>
 nmap fr :RGruby <C-R><C-W><CR>
 nmap fb :RGblueprint <C-R><C-W><CR>
-nmap <Leader>f :Files<CR>
+nmap <Leader>ff :Files<CR>
+nmap <Leader>fg :RGgo<SPACE>
 nmap <Leader>fa :RGrails<SPACE>
+nmap <Leader>ft :RGspec<SPACE>
 nmap <Leader>fm :RGmodel<SPACE>
 nmap <Leader>fv :RGview<SPACE>
 nmap <Leader>fc :RGcontroller<SPACE>

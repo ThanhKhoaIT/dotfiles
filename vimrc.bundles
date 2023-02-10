@@ -30,7 +30,7 @@ Plug 'ThanhKhoaIT/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim' "Git versions
-Plug 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-surround'
 Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'scrooloose/syntastic'
@@ -95,8 +95,12 @@ Plug 'ervandew/supertab'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'ThanhKhoaIT/rails-db-migrate.vim'
-
+" Plug '~/.vim/plugged/click2open.vim'
 Plug 'ThanhKhoaIT/git-message.vim'
+" Plug 'ThanhKhoaIT/byebug.vim'
+" Plug 'github/copilot.vim' # Auto complete by AI
+
+" Plug 'APZelos/blamer.nvim'
 
 " Style
 " Plug 'junegunn/vim-emoji'

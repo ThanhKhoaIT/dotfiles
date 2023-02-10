@@ -29,6 +29,6 @@
 [user]
 	name = Khoa Nguyen
 	email = thanhkhoait@gmail.com
-	signingkey = 7A139F9F952FD985
+	signingKey = 886FD5F879053EFD67891D68FB10D66BC93A9C0F
 [gpg]
 	program = gpg
