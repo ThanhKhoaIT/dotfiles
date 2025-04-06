@@ -2,6 +2,7 @@
 tags
 /bower_components/
 /log
+/sorbet
 /node_modules/
 /tmp
 /vendor
@@ -16,3 +17,4 @@ tags
 *.otf
 *.eot
 *.json
+*.rbi

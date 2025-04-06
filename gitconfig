@@ -17,6 +17,7 @@
   autocrlf = input
 [merge]
   ff = only
+  # conflictStyle = diff3
 [commit]
   template = ~/.gitmessage
 	gpgsign = true
@@ -29,6 +30,9 @@
 [user]
 	name = Khoa Nguyen
 	email = thanhkhoait@gmail.com
-	signingKey = 886FD5F879053EFD67891D68FB10D66BC93A9C0F
+	signingkey = 0DC5C6CC4074C4E7
 [gpg]
-	program = gpg
+	program =gpg
+[safe]
+	directory = /Users/khoa/projects/actions-runner/_work/lixibox-wms/lixibox-wms
+	directory = /Users/khoa/projects/actions-runner/_work/lixibox-wms/lixibox-wms

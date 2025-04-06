@@ -18,7 +18,7 @@ set nobackup
 set foldmethod=indent
 set foldlevelstart=20
 set redrawtime=10000
-set scrolloff=5
+set scrolloff=8
 set wildmenu
 " set noswapfile
 highlight Normal ctermbg=NONE
@@ -32,6 +32,12 @@ highlight LineNr cterm=bold ctermfg=242 ctermbg=237
 
 " vim-gitgutter
 " let g:gitgutter_realtime = 1
+
+" START: VUE project
+let &includeexpr = "substitute(v:fname, '^dashboard', 'app/javascript/dashboard', '')"
+set suffixesadd+=.vue,.js,.ts
+set path+=app/javascript,app/javascript/dashboard,app/javascript/dashboard/components,app/javascript/dashboard/components/widgets
+" END: VUE project
 
 command W w
 command ForceKillRails !kill -9 $(cat tmp/pids/server.pid)
@@ -51,6 +57,7 @@ nmap zz <C-w>=
 " Quit all
 nmap ~~ :qa!<CR>
 
+nmap ! :!<Space>clear;<Space>
 " nmap , *
 nmap F za
 nmap K kJ
@@ -58,7 +65,6 @@ nmap K kJ
 " nmap <S-CR> N
 nmap ( ^
 nmap ) $
-nmap <Leader>k :Gbrowse! <cword><CR>
 nmap + :vertical resize +20<cr>
 nmap _ :vertical resize -20<cr>
 nmap <C-f> <PageDown>
@@ -81,22 +87,22 @@ nmap sw :Switch<cr>
 " Find
 " map <Leader>ag :Ag!<SPACE>""<LEFT>
 " nmap fs :Ag! "<cword>" -G "\.(css\|sass\|scss)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
-" nmap fj :Ag! "<cword>" -G "\(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
+" nmap fj :Ag! "<cword>" -G "\(js\|es6\|tsx\|ts)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<CR>
 " nmap fr :Ag! "<cword>" -G "\.rb"<CR>
 " nmap fv :Ag! "<cword>" -G "\.(haml\|erb)"<CR>
 " nmap fm :Ag! "<cword>" -G "\.rb" -r "app/models"<CR>
 " nmap fc :Ag! "<cword>" -G "\.rb" -r "app/controllers"<CR>
 " nmap fb :Ag! "<cword>" -G \_blueprint\.rb -r "app/blueprints"<CR>
-" nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml\|go)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
+" nmap fa :Ag! "<cword>" -G "\.(rb\|erb\|js\|es6\|css\|sass\|scss\|yml\|rake\|haml\|go\|tsx\|ts)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<CR>
 "
 " map <Leader>fs :Ag! -G "\.(css\|scss\|sass)" --ignore "*.min.css" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
-" map <Leader>fj :Ag! -G "\.(js\|es6)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
+" map <Leader>fj :Ag! -G "\.(js\|es6\|tsx\|ts)" --ignore "*.min.js" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/webpack"<SPACE>
 " map <Leader>fr :Ag! -G "\.rb"<SPACE>
 " map <Leader>fv :Ag! -G "\.(haml\|erb)"<SPACE>
 " map <Leader>fm :Ag! -G "\.rb" -r "app/models"<SPACE>
 " map <Leader>fc :Ag! -G "\.rb" -r "app/controllers"<SPACE>
 " map <Leader>fb :Ag! -G \_blueprint\.rb -r "app/blueprints"<SPACE>
-" map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6\|go)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
+" map <Leader>fa :Ag! -G "\.(rb\|erb\|js\|css\|sass\|scss\|yml\|rake\|haml\|es6\|go\|tsx\|ts)" --ignore "*.min.*" --ignore-dir "app/assets/javascripts/components" --ignore-dir "app/assets/stylesheets/components" --ignore-dir "app/assets/webpack"<SPACE>
 "
 
 " Ripgrep Search
@@ -116,9 +122,9 @@ map <C-c> "*y<CR>
 map <C-a> <ESC>gg<S-v>G<ESC>
 
 map <Leader>bi :PluginInstall<CR>
-map <Leader>ct :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
-map <Leader>` :Start! ctags -R ./ $(bundle list --paths) --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
-map <Leader>f :FixWhitespace<CR>
+map <Leader>` :Start! ctags -R ./ --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
+map <Leader>`` :Start! ctags -R ./ $(bundle list --paths) --languages=ruby --exclude={.git,log,app/assets/webpack,node_modules,"*.min.js","*.min.css"}<CR>
+" map <Leader>f :FixWhitespace<CR>
 map <Leader>n <C-w>v<C-h>''
 map <Leader>h :GundoToggle<CR>
 map <Leader>nt :NERDTreeToggle<CR>
@@ -133,17 +139,18 @@ map <Leader>vi :tabe ~/.vimrc.local<CR>
 map <Leader>p hplde
 map <Leader>b :mark<SPACE>
 
-
 " Git
-map <Leader>gco :Gread<CR>
-map <Leader>ga :Gwrite<CR>
-map <Leader>gac :Gcommit -am ""<LEFT>
-map <Leader>gb :Gblame<CR>
-map <Leader>gc :Gcommit -m ""<LEFT>
-map <Leader>gd :Gvdiff<CR>
-map <Leader>gm :Gmove<SPACE>
-map <Leader>gr :Gremove<CR>
-map <Leader>gs :Gstatus<CR>
+nmap <Leader>gco :Gread<CR>
+nmap <Leader>ga :Gwrite<CR>
+nmap <Leader>gac :Git commit -am ""<LEFT>
+nmap <Leader>gb :G<SPACE>blame<CR>
+nmap <Leader>gv :GBrowse %<CR>
+nmap <Leader>gd :Gdiffsplit<CR>
+nmap <Leader>gm :GMove<SPACE>
+nmap <Leader>gr :GRemove<CR>
+nmap <Leader>gs :G<CR>
+nmap <Leader>gc :! clear; aicommits --generate 4 --exclude 'sorbet/*'; clear<CR>
+nmap <Leader>gp :G push<CR>
 
 " Rails
 map <Leader>aj <ESC>:e app/assets/javascripts/application.js<CR>
@@ -153,6 +160,7 @@ map <Leader>bb :!bundle install<CR>
 map <Leader>d <ESC>obyebug<ESC>
 map <Leader>dv <ESC>o- byebug<ESC>
 map <Leader>g :e Gemfile<CR>
+map <Leader>r <ESC>ggi<CR><ESC>ki# frozen_string_literal: true<CR><ESC>D
 
 map <Leader>b :Vblueprint<SPACE>
 
@@ -177,6 +185,15 @@ map <Leader>rt :e config/routes.rb<CR>
 map <Leader>sc :sp db/schema.rb<CR>
 " map <Leader>cv :REview <C-r><C-w>.html.haml
 
+nmap f1 :set foldlevel=1<CR>
+nmap f2 :set foldlevel=2<CR>
+nmap f3 :set foldlevel=3<CR>
+nmap f4 :set foldlevel=4<CR>
+nmap f5 :set foldlevel=5<CR>
+nmap f6 :set foldlevel=6<CR>
+nmap f7 :set foldlevel=7<CR>
+nmap f8 :set foldlevel=8<CR>
+
 " Tabs
 nmap <Leader>1 1gt
 nmap <Leader>2 2gt
@@ -187,6 +204,9 @@ nmap <Leader>6 6gt
 nmap <Leader>7 7gt
 nmap <Leader>8 8gt
 nmap <Leader>9 9gt
+
+" Auto fix Rubocop
+map <Leader>rf :!bundle exec rubocop -a %<CR>
 
 " Ctrl-P
 nnoremap <c-]> :CtrlPtjump<cr>
@@ -203,12 +223,15 @@ map <Leader>du :RailsMigrateUp<CR>
 map <Leader>dr :RailsMigrateRedo<CR>
 let g:rails_migrate_command = "Dispatch bundle exec rake"
 
+let g:rails_migrate_command = "Dispatch bundle exec rake"
+map <Leader>dmt :!rails db:migrate RAILS_ENV=test<CR>
+
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 " map <Leader>a :call RunAllSpecs()<CR>
-let g:rspec_command = "Dispatch ./bin/rspec {spec} -c -fprogress --color"
+let g:rspec_command = "Dispatch bundle exec rspec {spec} -c -fprogress --color"
 let g:rspec_runner = "os_x_iterm2"
 let g:dispatch_quickfix_height=15
 let g:dispatch_tmux_height=5
@@ -234,7 +257,6 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
-vmap <Leader>. :MultipleCursorsFind<SPACE>
 
 " let g:ag_format="%l:%f:%m"
 
@@ -259,7 +281,8 @@ let g:move_key_modifier = 'C'
 
 " let g:ctrlp_user_command = 'ag %s -l -g ""' " --nocolor
 
-autocmd BufWritePre * FixWhitespace
+" autocmd BufWritePre * FixWhitespace
+autocmd BufWritePre * :%s/\s\+$//e "FixWhitespace
 
 " Syntax
 " set statusline+=%#warningmsg#
@@ -274,6 +297,7 @@ autocmd BufWritePre * FixWhitespace
 " let g:airline#extensions#tmuxline#enabled = 0
 
 let g:ale_lint_on_text_changed = 'always'
+let g:ale_ruby_rubocop_executable = 'bundle'
 
 let g:tmuxline_preset = {
       \'a'    : '#S',
@@ -288,7 +312,7 @@ let g:tmuxline_preset = {
 set encoding=utf-8
 set guifont="Inconsolata\-g\ for\ Powerline"
 set laststatus=2
-set fillchars+=stl:\ ,stlnc:\ ,vert:\ 
+set fillchars+=stl:\ ,stlnc:\ ,vert:\
 
 let base16colorspace=256
 let g:Powerline_symbols = 'fancy'
@@ -403,7 +427,7 @@ map <Leader>cv :call CurrentFuncNameRuby()<CR>
 "       \ 'bin', 'README', 'README.md', 'circle.yml', '\.otf$',
 "       \ '\.png$', '\.jpg$', '\.gif$', '\.jpeg$', '\.svg$', '\.eot$', '\.ttf$', '\.woff$', '\.woff2$']
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|client\/node_modules$\|public$|log\|tmp$',
+      \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|sorbet|client\/node_modules$\|public$|log\|tmp$',
       \ 'file': '\.min\.js$\|\.json5$\|\.eot$\|\.tff$\|\.woff$\|\.woff2$\|\.json$\|\.png$\|\.jpeg$\|\.jpg$\|\.ico$\|\.so$\|\.dat$|\.DS_Store$'
       \ }
 
@@ -443,8 +467,16 @@ command! -bang -nargs=* RGgo
 
 command! -bang -nargs=* RGrails
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading  --color=always --smart-case -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml,go}" -- '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading  --color=always --smart-case -g "*.{rb,erb,js,es6,css,sass,scss,yml,rake,haml,go,ts,tsx}" -- '.shellescape(<q-args>), 1,
   \   {}, <bang>0)
+
+command! -bang -nargs=* FindByFilename
+  \ call fzf#run({
+  \   'source': 'rg --color=always --files | grep -i --color=always ' . shellescape(<q-args>),
+  \   'sink': 'e',
+  \   'options': '--ansi --exact',
+  \   'down': '40%'
+  \ })
 
 command! -bang -nargs=* RGspec
   \ call fzf#vim#grep(
@@ -497,6 +529,7 @@ nmap fs :RGstyle <C-R><C-W><CR>
 nmap fj :RGjs <C-R><C-W><CR>
 nmap fr :RGruby <C-R><C-W><CR>
 nmap fb :RGblueprint <C-R><C-W><CR>
+nmap ff :FindByFilename <C-R><C-W><CR>
 nmap <Leader>ff :Files<CR>
 nmap <Leader>fg :RGgo<SPACE>
 nmap <Leader>fa :RGrails<SPACE>
@@ -511,7 +544,7 @@ nmap <Leader>fb :RGblueprint<SPACE>
 
 " FZF Search
 if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --hidden --no-ignore -l "" -g "!{log,.git,.terragrunt-cache}/" -g "!tmp/cache" -g "!*.{jpg,png,svg,cache,min.css,min.js,min.scss}"'
+  let $FZF_DEFAULT_COMMAND = 'rg --hidden --no-ignore -l "" -g "!{log,.git,.terragrunt-cache,tmp,sorbet,vendor/bundle}/" -g "!tmp/cache" -g "!*.{jpg,png,svg,cache,min.css,min.js,min.scss}"'
 elseif executable('fd')
   let $FZF_DEFAULT_OPTS = '--ansi'
   let $FZF_DEFAULT_COMMAND = 'fd --hidden --color always -E "{.git,.terragrunt-cache,log,tmp}/*","*.{jpg,png,svg,cache}","*.min.{scss,css,js}"'
@@ -539,3 +572,10 @@ au BufRead,BufNewFile *.es6 set filetype=javascript
 " au CursorHoldI * checktime
 
 set tags^=./.git/tags;
+
+" GPT setup
+let g:chat_gpt_model='gpt-4'
+let g:chat_gpt_max_tokens=2000
+let g:chat_gpt_split_direction='vertical'
+let g:chat_gpt_lang='VietNam and shorten the introduction of the response'
+let g:chat_gpt_session_mode='0'
