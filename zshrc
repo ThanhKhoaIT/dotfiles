@@ -97,6 +97,8 @@ if [ -f '/Users/khoa/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/
 if [ -f '/Users/khoa/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/khoa/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 PATH=$(pyenv root)/shims:$PATH
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@23/bin:$PATH"
 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 test -e /Users/khoa/.iterm2_shell_integration.zsh && source /Users/khoa/.iterm2_shell_integration.zsh || true
