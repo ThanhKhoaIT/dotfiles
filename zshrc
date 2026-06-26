@@ -48,9 +48,6 @@ ZSH_TMUX_AUTOSTART=true
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 export ZSH_CUSTOM="~/.oh-my-zsh"
 
-export NVM_DIR=~/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
 export ZSH="/Users/khoa/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
@@ -96,9 +93,10 @@ if [ -f '/Users/khoa/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/khoa/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/khoa/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 PATH=$(pyenv root)/shims:$PATH
-export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@23/bin:$PATH"
+# export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+# export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
+# export PATH="/opt/homebrew/opt/node@23/bin:$PATH"
+
 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 test -e /Users/khoa/.iterm2_shell_integration.zsh && source /Users/khoa/.iterm2_shell_integration.zsh || true
@@ -119,3 +117,26 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 test -e ~/.zshrc.local && source ~/.zshrc.local || true
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
+export VISUAL=nvim
+
+# OpenClaw Completion
+source "/Users/khoa/.openclaw/completions/openclaw.zsh"
+
+# pnpm
+export PNPM_HOME="/Users/khoa/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/khoa/.local/bin:$PATH"

@@ -25,3 +25,4 @@ Please move that configuration to \`.zshrc.local' like so:
 
 MSG
 fi
+. "$HOME/.cargo/env"
